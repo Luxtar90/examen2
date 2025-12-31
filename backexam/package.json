@@ -7,6 +7,7 @@
     "deploy": "vercel --prod",
     "prisma:generate": "prisma generate",
     "db:push": "prisma db push",
+    "dev": "node server.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
