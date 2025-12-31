@@ -1,5 +1,26 @@
 import http from 'node:http'
 import { parse as parseUrl } from 'node:url'
+import fs from 'node:fs'
+import path from 'node:path'
+
+function loadEnv(paths = []) {
+  for (const p of paths) {
+    try {
+      const fp = path.resolve(process.cwd(), p)
+      if (!fs.existsSync(fp)) continue
+      const txt = fs.readFileSync(fp, 'utf8')
+      for (const line of txt.split(/\r?\n/)) {
+        const m = /^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/.exec(line)
+        if (!m) continue
+        const k = m[1]
+        let v = m[2]
+        if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) v = v.slice(1, -1)
+        if (!(k in process.env)) process.env[k] = v
+      }
+    } catch {}
+  }
+}
+loadEnv(['.env', '.env.local'])
 
 import openapiHandler from './api/openapi.json.js'
 import docsHandler from './api/docs.js'

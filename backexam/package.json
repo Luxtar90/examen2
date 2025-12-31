@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@vercel/blob": "^0.23.0",
-    "@prisma/client": "^5.16.1"
+    "@prisma/client": "^5.16.1",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "prisma": "^5.16.1"
